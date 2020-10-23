@@ -158,11 +158,15 @@ app.get('/dummyGet',function(req,res) {
   res.send("dummy get");
 });
 
-app.get('/loadTester', appCors(),function(req,res) {
-  fs.readFile('dummy.txt',function(error,data){
+app.get('/loadTester/:fileName/:fileType', appCors(),function(req,res) {
+  var _ref9 = req.params || {},
+  fileName = _ref9.fileName,
+  fileType = _ref9.fileType;
+  const filePath = fileName + "." + fileType;
+  fs.readFile(filePath, "utf8", function(error,data){
     if (error) throw error;
     console.log("This is dummy data", data);
-    res.send("data");
+    res.send(data);
   })
 });
 
